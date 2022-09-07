@@ -9,10 +9,8 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 export const MovieItem = (props) => {
 
   const onFavoriteHandler = () => {
-    props.onFavorite(props.movie._id);
+    props.onFavorite(props.movie);
   }
-
-  console.log(props.isFavorite);
 
 
   return (

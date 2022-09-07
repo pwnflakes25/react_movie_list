@@ -2,11 +2,11 @@ import { MovieItem } from "./MovieItem";
 import Grid from "@mui/material/Grid";
 
 export const MovieList = (props) => {
-  const onFavoriteHandler = (movieId) => {
-    props.onFavoriteMovie(movieId);
+  const onFavoriteHandler = (movie) => {
+    props.onFavoriteMovie(movie);
   };
 
-  console.log(props);
+  const favoriteMoviesIds = props.favoriteMovies.map(movie => movie._id);
 
   return (
     <Grid
@@ -19,7 +19,7 @@ export const MovieList = (props) => {
         <Grid key={movie._id} item xs={6} md={3}>
           <MovieItem
             onFavorite={onFavoriteHandler}
-            isFavorite={props.favoriteMovies[movie._id] ? true : false}
+            isFavorite={favoriteMoviesIds.includes(movie._id)}
             movie={movie}
           />
         </Grid>
