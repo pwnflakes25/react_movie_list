@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { MovieList } from "./components/Movie/MovieList";
 import { Search } from "./components/SearchBar/Search";
+import { useDebounce } from "./Hooks/useDebounce";
 
 function App() {
   const [favoriteMovies, setFavoriteMovies] = useState({'AB': 1, 'BC': 1});
+  const [searchInput, setSearchInput] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const [movies, filterMovies] = useState([
     {
       _id: "AB",
@@ -32,8 +35,25 @@ function App() {
     },
   ]);
 
-  const onSearchHandler = () => {
-    // ... filter movies here..
+  const debouncedSearch = useDebounce(searchInput, 500);
+
+  useEffect(() => {
+    async function fetchData() {
+
+      console.log("inside the useEffect we get the value:", debouncedSearch);
+      // setLoading(true);
+
+      // const url = `... ${debouncedSearch}`;
+      // const data = await fetch(url).then(res => res.json());
+      // setLoading(false);
+    }
+
+    if(debouncedSearch) fetchData();
+  }, [debouncedSearch])
+
+  const onSearchHandler = (text) => {
+    console.log('handling search input:', text);
+    setSearchInput(text);
   };
 
   const onSetFavoriteMovies = (movieId) => {
@@ -52,11 +72,12 @@ function App() {
 
   return (
     <div className="App">
-      <Search onSearch={onSearchHandler} />
+      <Search onSearch={onSearchHandler} currentSearchInput={searchInput} />
       <MovieList
         onFavoriteMovie={onSetFavoriteMovies}
         favoriteMovies={favoriteMovies}
         movies={movies}
+        isLoading={isLoading}
       />
     </div>
   );

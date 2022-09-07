@@ -1,18 +1,11 @@
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import TextField from '@mui/material/TextField';
-import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { alpha, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import { useState } from "react";
 
-export const Search = (props) => {
-
-  const onInputChangeHandler = (event) => {
-    props.onSearch(event.target.value)
-  };
-
-  const CustomInput = styled(TextField)(({theme}) => ({
+const CustomInput = styled(TextField)(({theme}) => ({
     '& label': {
         color: 'white',
     },
@@ -40,6 +33,12 @@ export const Search = (props) => {
       },
     },
   }));
+
+export const Search = (props) => {
+
+  const onInputChangeHandler = (event) => {
+    props.onSearch(event.target.value);
+  };
   
 
   return (
