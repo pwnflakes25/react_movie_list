@@ -31,8 +31,11 @@ const StyledTab = styled((props) => <Tab {...props} />)(
 
 function App() {
 
+  // access stored favorite movies from localStorage
   const storedFavoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies')) || [];
-  console.log("stored movies:", storedFavoriteMovies);
+
+
+  // states
   const [favoriteMovies, setFavoriteMovies] = useState(storedFavoriteMovies);
   const [searchInput, setSearchInput] = useState("");
   const [currentTab, setCurrentTab] = useState("Movies");
@@ -64,8 +67,10 @@ function App() {
     },
   ]);
 
+  // debounce the search to prevent calling API too many times
   const debouncedSearch = useDebounce(searchInput, 500);
 
+  // Fetch Data from API
   useEffect(() => {
     async function fetchData() {
       setCurrentTab('Movies');
@@ -85,6 +90,7 @@ function App() {
     setSearchInput(text);
   };
 
+  // Modify the Favorite Movies List
   const onSetFavoriteMovies = (movieInput) => {
     setFavoriteMovies((prevArray) => {
       const currentFavorites = [...prevArray];
@@ -99,8 +105,9 @@ function App() {
     });
   };
 
+
+  // Handle Tab Changes
   const handleTabChange = (event, value) => {
-    console.log("tab", value);
     setCurrentTab(value);
   };
 
