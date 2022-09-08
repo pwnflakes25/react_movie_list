@@ -1,0 +1,17 @@
+.moviePoster {
+    min-height: 30vh;
+    width: 40vw;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .moviePoster {
+      width: 80vw;
+    }
+}
+
+.movieDetail {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+}
