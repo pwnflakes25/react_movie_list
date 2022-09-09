@@ -6,7 +6,8 @@ import classes from "./FavoriteButton.module.css";
 export const FavoriteButton = (props) => {
   const [isActive, setIsActive] = useState(false);
 
-  const onFavoriteHandler = () => {
+  const onFavoriteHandler = (event) => {
+    event.stopPropagation();
     setIsActive((current) => !current);
     props.onFavorite();
   };

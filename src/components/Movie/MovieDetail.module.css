@@ -8,10 +8,24 @@
     .moviePoster {
       width: 80vw;
     }
+
+    .movieDetail {
+        width: 75vw;
+    }
 }
 
 .movieDetail {
     display: flex;
     flex-direction: column;
     padding: 15px 20px;
+    width: 35vw;
+}
+
+.movieHeader {
+    display: flex;
+    align-items: flex-end;
+}
+
+.movieHeader h2:nth-child(2) {
+    margin-left: 10px;
 }

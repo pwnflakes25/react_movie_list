@@ -10,10 +10,10 @@ const CustomInput = styled(TextField)(({theme}) => ({
         color: 'white',
     },
     '& label.Mui-focused': {
-      color: 'purple',
+      color: '#ff94ff',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: 'purple',
+      borderBottomColor: '#ff94ff',
     },
     '& .MuiOutlinedInput-root': {
        borderRadius: '20px',
@@ -26,10 +26,10 @@ const CustomInput = styled(TextField)(({theme}) => ({
         borderColor: 'white',
       },
       '&:hover fieldset': {
-        borderColor: 'purple',
+        borderColor: '#ff94ff',
       },
       '&.Mui-focused fieldset': {
-        borderColor: 'purple',
+        borderColor: 'p#ff94ff',
       },
     },
   }));

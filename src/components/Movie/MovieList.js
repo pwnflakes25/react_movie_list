@@ -2,6 +2,7 @@ import { MovieItem } from "./MovieItem";
 import Grid from "@mui/material/Grid";
 import { Fragment, useState } from "react";
 import { MovieDetail } from "./MovieDetail";
+import Slide from "@mui/material/Slide";
 
 export const MovieList = (props) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -18,7 +19,7 @@ export const MovieList = (props) => {
   const onViewMovieHandler = (movie) => {
     setCurrentViewedMovie(movie);
     handleDialogClickOpen();
-  }
+  };
 
   const onFavoriteHandler = (movie) => {
     props.onFavoriteMovie(movie);
@@ -35,17 +36,23 @@ export const MovieList = (props) => {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {props.movies.map((movie) => (
-          <Grid key={movie.id} item xs={6} md={3}>
-            <MovieItem
-              onFavorite={onFavoriteHandler}
-              isFavorite={favoriteMoviesIds.includes(movie.id)}
-              movie={movie}
-              onViewMovie={onViewMovieHandler}
-            />
-          </Grid>
+          <Slide direction="up" in={props.movies} mountOnEnter unmountOnExit>
+            <Grid key={movie.id} item xs={6} md={3}>
+              <MovieItem
+                onFavorite={onFavoriteHandler}
+                isFavorite={favoriteMoviesIds.includes(movie.id)}
+                movie={movie}
+                onViewMovie={onViewMovieHandler}
+              />
+            </Grid>
+          </Slide>
         ))}
       </Grid>
-      <MovieDetail movie={currentViewedMovie} openState={isDialogOpen} handleClose={handleDialogClose}/>
+      <MovieDetail
+        movie={currentViewedMovie}
+        openState={isDialogOpen}
+        handleClose={handleDialogClose}
+      />
     </Fragment>
   );
 };

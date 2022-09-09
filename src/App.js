@@ -20,7 +20,7 @@ const StyledTab = styled((props) => <Tab {...props} />)(({ theme }) => ({
   marginRight: theme.spacing(1),
   color: "white",
   "&.Mui-selected": {
-    color: "purple",
+    color: "#ff94ff",
   },
   "&.Mui-focusVisible": {
     backgroundColor: "transparent",
@@ -35,6 +35,7 @@ function App() {
   // states
   const [favoriteMovies, setFavoriteMovies] = useState(storedFavoriteMovies);
   const [searchInput, setSearchInput] = useState("");
+  const [isSearchBarFocused, toggleSearchBarFocused] = useState(false);
   const [currentTab, setCurrentTab] = useState("Movies");
   const [isLoading, setLoading] = useState(false);
   const [movies, setMovies] = useState([]);
@@ -49,7 +50,7 @@ function App() {
       const url =
         "https://api.themoviedb.org/3/movie/popular?api_key=dfdc1f38d126df44ced0515b846cf94a&language=en-US&page=1";
       const response = await fetch(url);
-      const data = await response.json()
+      const data = await response.json();
       setMovies(data.results);
       setLoading(false);
     };
@@ -60,7 +61,7 @@ function App() {
 
       const url = `https://api.themoviedb.org/3/search/movie?api_key=dfdc1f38d126df44ced0515b846cf94a&language=en-US&query=${debouncedSearch}&page=1&include_adult=false`;
       const response = await fetch(url);
-      const data = await response.json()
+      const data = await response.json();
       setMovies(data.results);
       setLoading(false);
     }
