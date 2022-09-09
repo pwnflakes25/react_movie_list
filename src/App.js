@@ -37,7 +37,7 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
   const [isSearchBarFocused, toggleSearchBarFocused] = useState(false);
   const [currentTab, setCurrentTab] = useState("Movies");
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
 
   // debounce the search to prevent calling API too many times
@@ -52,6 +52,7 @@ function App() {
       const response = await fetch(url);
       const data = await response.json();
       setMovies(data.results);
+      console.log("setting loading to false in fetching initial data");
       setLoading(false);
     };
 
@@ -63,18 +64,19 @@ function App() {
       const response = await fetch(url);
       const data = await response.json();
       setMovies(data.results);
+      console.log("setting loading to false in fetching search data");
       setLoading(false);
     }
 
-    if (!movies.length) {
+    if (!debouncedSearch && !movies.length && isLoading) {
       fetchInitialData();
-    } else if (debouncedSearch) {
+    } else if (debouncedSearch && isLoading) {
       fetchDataWithSearch();
     }
-  }, [debouncedSearch, movies]);
+  }, [debouncedSearch, movies, isLoading]);
 
   const onSearchHandler = (text) => {
-    console.log("handling search input:", text);
+    setLoading(true);
     setSearchInput(text);
   };
 
