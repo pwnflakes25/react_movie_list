@@ -35,10 +35,10 @@ function App() {
   // states
   const [favoriteMovies, setFavoriteMovies] = useState(storedFavoriteMovies);
   const [searchInput, setSearchInput] = useState("");
-  const [isSearchBarEmpty, toggleSearchBarEmpty] = useState(false);
   const [currentTab, setCurrentTab] = useState("Movies");
   const [isLoading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
+  const [prevDebouncedValue, setPrevDebouncedValue] = useState(null);
 
   // debounce the search to prevent calling API too many times
   const debouncedSearch = useDebounce(searchInput, 500);
@@ -49,7 +49,7 @@ function App() {
   useEffect(() => {
     const fetchInitialData = async () => {
       setLoading(true);
-      toggleSearchBarEmpty(false);
+      setPrevDebouncedValue(debouncedSearch);
       const url =
         "https://api.themoviedb.org/3/movie/popular?api_key=dfdc1f38d126df44ced0515b846cf94a&language=en-US&page=1";
       const response = await fetch(url);
@@ -62,6 +62,7 @@ function App() {
     async function fetchDataWithSearch() {
       setCurrentTab("Movies");
       setLoading(true);
+      setPrevDebouncedValue(debouncedSearch);
 
       const url = `https://api.themoviedb.org/3/search/movie?api_key=dfdc1f38d126df44ced0515b846cf94a&language=en-US&query=${debouncedSearch}&page=1&include_adult=false`;
       const response = await fetch(url);
@@ -71,12 +72,13 @@ function App() {
       setLoading(false);
     }
 
-    if (!debouncedSearch && !movies.length && isLoading) {
+    console.log(debouncedSearch, prevDebouncedValue);
+
+    if (debouncedSearch === prevDebouncedValue) return;
+    if (!debouncedSearch && isLoading) {
       fetchInitialData();
     } else if (debouncedSearch && isLoading) {
       fetchDataWithSearch();
-    } else if (!debouncedSearch && isSearchBarEmpty) {
-      fetchInitialData();
     }
   }, [debouncedSearch, movies, isLoading]);
 
@@ -84,10 +86,6 @@ function App() {
     setLoading(true);
     setSearchInput(text);
   };
-
-  const onEmptySearchBarHandler = () => {
-    toggleSearchBarEmpty(true);
-  }
 
   // Modify the Favorite Movies List
   const onSetFavoriteMovies = (movieInput) => {
@@ -111,7 +109,7 @@ function App() {
 
   return (
     <div className="App">
-      <Search onSearch={onSearchHandler} currentSearchInput={searchInput}  onEmptySearchBar={onEmptySearchBarHandler}/>
+      <Search onSearch={onSearchHandler} currentSearchInput={searchInput}/>
       <CustomTabs
         sx={{ marginBottom: "15px" }}
         value={currentTab}
