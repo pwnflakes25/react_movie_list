@@ -35,7 +35,7 @@ function App() {
   // states
   const [favoriteMovies, setFavoriteMovies] = useState(storedFavoriteMovies);
   const [searchInput, setSearchInput] = useState("");
-  const [isSearchBarFocused, toggleSearchBarFocused] = useState(false);
+  const [isSearchBarEmpty, toggleSearchBarEmpty] = useState(false);
   const [currentTab, setCurrentTab] = useState("Movies");
   const [isLoading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -43,10 +43,13 @@ function App() {
   // debounce the search to prevent calling API too many times
   const debouncedSearch = useDebounce(searchInput, 500);
 
+  console.log(debouncedSearch);
+
   // Fetch Data from API
   useEffect(() => {
     const fetchInitialData = async () => {
       setLoading(true);
+      toggleSearchBarEmpty(false);
       const url =
         "https://api.themoviedb.org/3/movie/popular?api_key=dfdc1f38d126df44ced0515b846cf94a&language=en-US&page=1";
       const response = await fetch(url);
@@ -72,6 +75,8 @@ function App() {
       fetchInitialData();
     } else if (debouncedSearch && isLoading) {
       fetchDataWithSearch();
+    } else if (!debouncedSearch && isSearchBarEmpty) {
+      fetchInitialData();
     }
   }, [debouncedSearch, movies, isLoading]);
 
@@ -79,6 +84,10 @@ function App() {
     setLoading(true);
     setSearchInput(text);
   };
+
+  const onEmptySearchBarHandler = () => {
+    toggleSearchBarEmpty(true);
+  }
 
   // Modify the Favorite Movies List
   const onSetFavoriteMovies = (movieInput) => {
@@ -102,7 +111,7 @@ function App() {
 
   return (
     <div className="App">
-      <Search onSearch={onSearchHandler} currentSearchInput={searchInput} />
+      <Search onSearch={onSearchHandler} currentSearchInput={searchInput}  onEmptySearchBar={onEmptySearchBarHandler}/>
       <CustomTabs
         sx={{ marginBottom: "15px" }}
         value={currentTab}

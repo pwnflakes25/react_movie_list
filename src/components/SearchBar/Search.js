@@ -38,6 +38,7 @@ export const Search = (props) => {
 
   const onInputChangeHandler = (event) => {
     props.onSearch(event.target.value);
+    if (!event.target.value) props.onEmptySearchBar();
   };
   
 
