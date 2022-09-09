@@ -36,8 +36,8 @@ export const MovieList = (props) => {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         {props.movies.map((movie) => (
-          <Slide direction="up" in={props.movies} mountOnEnter unmountOnExit>
-            <Grid key={movie.id} item xs={6} md={3}>
+          <Slide key={movie.id} direction="up" in={!!props.movies} mountOnEnter unmountOnExit>
+            <Grid item xs={6} md={3}>
               <MovieItem
                 onFavorite={onFavoriteHandler}
                 isFavorite={favoriteMoviesIds.includes(movie.id)}
