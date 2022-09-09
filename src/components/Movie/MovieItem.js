@@ -1,9 +1,8 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { FavoriteButton } from "../UI/favoriteButton";
 import classes from "./MovieItem.module.css";
-import StarIcon from '@mui/icons-material/Star';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
 
 export const MovieItem = (props) => {
@@ -44,9 +43,7 @@ export const MovieItem = (props) => {
             {props.movie.release_date}
           </Typography>
           </div>
-          <div className={classes.iconContainer}>
-          {props.isFavorite ? <StarIcon onMouseDown={onFavoriteHandler} sx={{fontSize: 35}} /> : <StarOutlineIcon onMouseDown={onFavoriteHandler}  sx={{fontSize: 35}}/>}
-          </div>
+          <FavoriteButton onFavorite={onFavoriteHandler} isFavorite={props.isFavorite} />
         </CardContent>
     </Card>
   );
