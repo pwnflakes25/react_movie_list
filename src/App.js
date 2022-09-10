@@ -72,15 +72,12 @@ function App() {
       setLoading(false);
     }
 
-    console.log(debouncedSearch, prevDebouncedValue);
-
-    if (debouncedSearch === prevDebouncedValue) return;
     if (!debouncedSearch && isLoading) {
       fetchInitialData();
     } else if (debouncedSearch && isLoading) {
       fetchDataWithSearch();
     }
-  }, [debouncedSearch, movies, isLoading]);
+  }, [debouncedSearch]);
 
   const onSearchHandler = (text) => {
     setLoading(true);
