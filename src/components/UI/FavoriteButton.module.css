@@ -22,10 +22,28 @@
     display: flex;
     width: 50px;
     height: 50px;
+    min-width: 50px;
     border-radius: 50px;
     background-color: rgba(255, 255, 255, 0.2);
     /* opacity: 0.8; */
     justify-content: center;
     align-items: center;
     color: white;
+}
+
+.icon {
+  font-size: 35px;
+}
+
+@media only screen and (max-width: 1024px) {
+  /* For mobile phones: */
+  .icon {
+    font-size: 25px;
+  }
+
+  .iconContainer {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+  }
 }

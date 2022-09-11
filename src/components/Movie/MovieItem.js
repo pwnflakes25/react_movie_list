@@ -3,6 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { FavoriteButton } from "../UI/FavoriteButton";
 import classes from "./MovieItem.module.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export const MovieItem = (props) => {
   const onFavoriteHandler = (event) => {
@@ -13,11 +14,27 @@ export const MovieItem = (props) => {
     props.onViewMovie(props.movie);
   };
 
+  const theme = createTheme();
+
+  theme.typography.h3 = {
+    fontSize: "1rem",
+    "@media (max-width:1024px)": {
+      fontSize: "0.8rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1rem",
+    },
+  };
+
+  const posterPath = props?.movie?.poster_path
+    ? `https://image.tmdb.org/t/p/w500/${props.movie.poster_path}`
+    : "https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie.jpg";
+
   return (
     <Card
       sx={{
         borderRadius: 5,
-        background: `url('https://image.tmdb.org/t/p/w500/${props.movie.poster_path}')`,
+        background: `url(${posterPath})`,
         height: "15rem",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -32,9 +49,11 @@ export const MovieItem = (props) => {
     >
       <CardContent className={classes.glassPane}>
         <div>
-          <Typography fontSize={"1rem"} sx={{ color: "white" }} component="div">
-            {props?.movie?.title}
-          </Typography>
+          <ThemeProvider theme={theme}>
+            <Typography variant="h3" sx={{ color: "white" }}>
+              {props?.movie?.title}
+            </Typography>
+          </ThemeProvider>
           <Typography
             sx={{ fontSize: 14, fontWeight: "bold" }}
             color="text.secondary"

@@ -16,15 +16,14 @@ export const FavoriteButton = (props) => {
     <div className={classes.iconContainer}>
       {props.isFavorite ? (
         <StarIcon
-          className={isActive ? classes.animateIcon : ""}
+          className={`${isActive ? classes.animateIcon : ""} ${classes.icon}`}
           onMouseDown={onFavoriteHandler}
           sx={{ fontSize: 35 }}
         />
       ) : (
         <StarOutlineIcon
-          className={isActive ? classes.animateIcon : ""}
+          className={`${isActive ? classes.animateIcon : ""} ${classes.icon}`}
           onMouseDown={onFavoriteHandler}
-          sx={{ fontSize: 35 }}
         />
       )}
     </div>
